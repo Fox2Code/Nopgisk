@@ -59,9 +59,9 @@ def clear_folder(folder):
             shutil.rmtree(os.path.join(root, d))
 
 def copy_folder(source, dest):
-    if not os.path.exists(dest):
-        os.mkdir(dest)
-    shutil.copytree(source, dest, dirs_exist_ok = True, ignore = shutil.ignore_patterns('*~', '*.pyc'))
+    if os.path.exists(dest):
+        os.remove(dest)
+    shutil.copytree(source, dest)
 
 def read_props(prop_file):
     keys = {}
@@ -138,6 +138,8 @@ def archive_source():
 
 
 def build_magisk():
+    if not os.path.exists(OUTPUT_DIR):
+        os.mkdir(OUTPUT_DIR)
     exec_cmd(["./build.py", "ndk"])
     props = read_props(MAGISK_GRADLE_PROP)
     f = open(MAGISK_CONFIG, "w")
@@ -147,11 +149,11 @@ def build_magisk():
     exec_cmd(["./build.py", "-v", "all"])
     f = open(OUTPUT_DIR_JSON, "w")
     f.write("{\n")
-    f.write("  \"magisk\": {")
+    f.write("  \"magisk\": {\n")
     f.write("    \"version\": \"nopgisk-" + props["magisk.versionCode"] + "\",\n")
     f.write("    \"versionCode\": \"" + props["magisk.versionCode"] + "\",\n")
-    f.write("    \"link\": \"https://raw.githubusercontent.com/Fox2Code/nopgisk-files/files/app-debug.apk\",\n")
-    f.write("    \"note\": \"https://raw.githubusercontent.com/Fox2Code/nopgisk-files/files/notes.md\"\n")
+    f.write("    \"link\": \"https://raw.githubusercontent.com/Fox2Code/nopgisk-files/main/app-debug.apk\",\n")
+    f.write("    \"note\": \"https://raw.githubusercontent.com/Fox2Code/nopgisk-files/main/notes.md\"\n")
     f.write("  },\n")
     f.write("  \"stub\": {\n")
     f.write("    \"versionCode\": \"" + props["magisk.stubVersion"] + "\",\n")

@@ -1,0 +1,26 @@
+--- a/app/src/main/java/com/topjohnwu/magisk/core/Config.kt
++++ b/app/src/main/java/com/topjohnwu/magisk/core/Config.kt
+@@ -148,8 +148,8 @@ object Config : PreferenceModel, DBConfig {
+     var suMntNamespaceMode by dbSettings(Key.SU_MNT_NS, Value.NAMESPACE_MODE_REQUESTER)
+     var suMultiuserMode by dbSettings(Key.SU_MULTIUSER_MODE, Value.MULTIUSER_MODE_OWNER_ONLY)
+     var suBiometric by dbSettings(Key.SU_BIOMETRIC, false)
+-    var zygisk by dbSettings(Key.ZYGISK, false)
+-    var denyList by DBBoolSettingsNoWrite(Key.DENYLIST, false)
++    var zygisk by dbSettings(Key.ZYGISK, true)
++    var denyList by DBBoolSettingsNoWrite(Key.DENYLIST, true)
+     var suManager by dbStrings(Key.SU_MANAGER, "", true)
+     var keyStoreRaw by dbStrings(Key.KEYSTORE, "", true)
+ 
+--- a/native/jni/core/db.cpp
++++ b/native/jni/core/db.cpp
+@@ -115,8 +115,8 @@ db_settings::db_settings() {
+     data[ROOT_ACCESS] = ROOT_ACCESS_APPS_AND_ADB;
+     data[SU_MULTIUSER_MODE] = MULTIUSER_MODE_OWNER_ONLY;
+     data[SU_MNT_NS] = NAMESPACE_MODE_REQUESTER;
+-    data[DENYLIST_CONFIG] = false;
+-    data[ZYGISK_CONFIG] = false;
++    data[DENYLIST_CONFIG] = true;
++    data[ZYGISK_CONFIG] = true;
+ }
+ 
+ int db_settings::get_idx(string_view key) const {

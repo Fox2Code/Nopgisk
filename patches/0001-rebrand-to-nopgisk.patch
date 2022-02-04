@@ -1,6 +1,6 @@
 --- a/app/src/main/java/com/topjohnwu/magisk/core/Const.kt
 +++ b/app/src/main/java/com/topjohnwu/magisk/core/Const.kt
-@@ -43,14 +43,14 @@ object Const {
+@@ -43,7 +43,7 @@ object Const {
  
      object Url {
          const val PATREON_URL = "https://www.patreon.com/topjohnwu"
@@ -9,14 +9,6 @@
  
          val CHANGELOG_URL = if (APP_IS_CANARY) Info.remote.magisk.note
          else "https://topjohnwu.github.io/Magisk/releases/${BuildConfig.VERSION_CODE}.md"
- 
-         const val GITHUB_RAW_URL = "https://raw.githubusercontent.com/"
-         const val GITHUB_API_URL = "https://api.github.com/"
--        const val GITHUB_PAGE_URL = "https://topjohnwu.github.io/magisk-files/"
-+        const val GITHUB_PAGE_URL = "https://fox2code.github.io/nopgisk-files/"
-         const val JS_DELIVR_URL = "https://cdn.jsdelivr.net/gh/"
-     }
- 
 --- a/app/src/main/res/values/resources.xml
 +++ b/app/src/main/res/values/resources.xml
 @@ -2,7 +2,7 @@
@@ -70,6 +62,27 @@
  
      unzip -o "$ZIPFILE" customize.sh -d $MODPATH >&2
  
+--- a/app/src/main/java/com/topjohnwu/magisk/core/Config.kt
++++ b/app/src/main/java/com/topjohnwu/magisk/core/Config.kt
+@@ -124,7 +124,7 @@ object Config : PreferenceModel, DBConfig {
+     var suDefaultTimeout by preferenceStrInt(Key.SU_REQUEST_TIMEOUT, 10)
+     var suAutoResponse by preferenceStrInt(Key.SU_AUTO_RESPONSE, Value.SU_PROMPT)
+     var suNotification by preferenceStrInt(Key.SU_NOTIFICATION, Value.NOTIFICATION_TOAST)
+-    var updateChannel by preferenceStrInt(Key.UPDATE_CHANNEL, defaultChannel)
++    var updateChannel by preferenceStrInt(Key.UPDATE_CHANNEL, Value.CUSTOM_CHANNEL)
+ 
+     var safetyNotice by preference(Key.SAFETY, true)
+     var darkTheme by preference(Key.DARK_THEME, AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+@@ -135,7 +135,8 @@ object Config : PreferenceModel, DBConfig {
+     var doh by preference(Key.DOH, false)
+     var showSystemApp by preference(Key.SHOW_SYSTEM_APP, false)
+ 
+-    var customChannelUrl by preference(Key.CUSTOM_CHANNEL, "")
++    var customChannelUrl by preference(Key.CUSTOM_CHANNEL,
++            "https://raw.githubusercontent.com/Fox2Code/nopgisk-files/main/canary.json")
+     private var localePrefs by preference(Key.LOCALE, "")
+     var locale
+         get() = localePrefs
 --- a/stub/src/main/java/com/topjohnwu/magisk/DownloadActivity.java
 +++ b/stub/src/main/java/com/topjohnwu/magisk/DownloadActivity.java
 @@ -38,8 +38,8 @@
