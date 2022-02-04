@@ -1,0 +1,85 @@
+--- a/app/src/main/java/com/topjohnwu/magisk/core/Const.kt
++++ b/app/src/main/java/com/topjohnwu/magisk/core/Const.kt
+@@ -43,14 +43,14 @@ object Const {
+ 
+     object Url {
+         const val PATREON_URL = "https://www.patreon.com/topjohnwu"
+-        const val SOURCE_CODE_URL = "https://github.com/topjohnwu/Magisk"
++        const val SOURCE_CODE_URL = "https://github.com/Fox2Code/Nopgisk"
+ 
+         val CHANGELOG_URL = if (APP_IS_CANARY) Info.remote.magisk.note
+         else "https://topjohnwu.github.io/Magisk/releases/${BuildConfig.VERSION_CODE}.md"
+ 
+         const val GITHUB_RAW_URL = "https://raw.githubusercontent.com/"
+         const val GITHUB_API_URL = "https://api.github.com/"
+-        const val GITHUB_PAGE_URL = "https://topjohnwu.github.io/magisk-files/"
++        const val GITHUB_PAGE_URL = "https://fox2code.github.io/nopgisk-files/"
+         const val JS_DELIVR_URL = "https://cdn.jsdelivr.net/gh/"
+     }
+ 
+--- a/app/src/main/res/values/resources.xml
++++ b/app/src/main/res/values/resources.xml
+@@ -2,7 +2,7 @@
+ <resources>
+ 
+     <!-- Static strings -->
+-    <string name="magisk" translatable="false">Magisk</string>
++    <string name="magisk" translatable="false">Nopgisk</string>
+     <string name="zygisk" translatable="false">Zygisk</string>
+     <string name="zygisk_beta" translatable="false">Zygisk (Beta)</string>
+     <string name="empty" translatable="false"/>
+--- a/scripts/addon.d.sh
++++ b/scripts/addon.d.sh
+@@ -52,7 +52,7 @@ main() {
+   else
+     PRETTY_VER="$MAGISK_VER($MAGISK_VER_CODE)"
+   fi
+-  print_title "Magisk $PRETTY_VER addon.d"
++  print_title "Nopgisk $PRETTY_VER addon.d"
+ 
+   mount_partitions
+   get_flags
+--- a/scripts/flash_script.sh
++++ b/scripts/flash_script.sh
+@@ -34,7 +34,7 @@ if echo $MAGISK_VER | grep -q '\.'; then
+ else
+   PRETTY_VER="$MAGISK_VER($MAGISK_VER_CODE)"
+ fi
+-print_title "Magisk $PRETTY_VER Installer"
++print_title "Nopgisk $PRETTY_VER Installer"
+ 
+ is_mounted /data || mount /data || is_mounted /cache || mount /cache
+ mount_partitions
+@@ -48,7 +48,7 @@ ui_print "- Target image: $BOOTIMAGE"
+ # Detect version and architecture
+ api_level_arch_detect
+ 
+-[ $API -lt 21 ] && abort "! Magisk only support Android 5.0 and above"
++[ $API -lt 21 ] && abort "! Nopgisk only support Android 5.0 and above"
+ 
+ ui_print "- Device platform: $ABI"
+ 
+--- a/scripts/util_functions.sh
++++ b/scripts/util_functions.sh
+@@ -762,7 +762,7 @@ install_module() {
+     set_permissions
+   else
+     print_title "$MODNAME" "by $MODAUTH"
+-    print_title "Powered by Magisk"
++    print_title "Powered by Nopgisk"
+ 
+     unzip -o "$ZIPFILE" customize.sh -d $MODPATH >&2
+ 
+--- a/stub/src/main/java/com/topjohnwu/magisk/DownloadActivity.java
++++ b/stub/src/main/java/com/topjohnwu/magisk/DownloadActivity.java
+@@ -38,8 +38,8 @@
+ @Obfuscate
+ public class DownloadActivity extends Activity {
+ 
+     private static final String APP_NAME = "Magisk";
+-    private static final String CANARY_URL = "https://topjohnwu.github.io/magisk-files/canary.json";
++    private static final String CANARY_URL = "https://raw.githubusercontent.com/Fox2Code/nopgisk-files/main/canary.json";
+ 
+     private String apkLink = BuildConfig.APK_URL;
+     private Context themed;
+
