@@ -31,6 +31,7 @@ MAGISK_BLACKLISTED_PR = []
 NOTES = {}
 NOTES["text"] = "### Nopgisk ${versionCode}\n\n"
 NOTES["text"] = NOTES["text"] + "The bleeding edge Magisk fork!\n\n"
+NOTES["text"] = NOTES["text"] + "If you have come here, it's for instability!\n\n"
 
 # Try to find fallback ANDROID_SDK_ROOT if not defined
 if ("ANDROID_SDK_ROOT" not in os.environ) or (len(os.environ["ANDROID_SDK_ROOT"]) == 0):
@@ -162,9 +163,10 @@ def build_magisk():
     f.write("}\n")
     f.close()
     NOTES["text"] = NOTES["text"].replace("${versionCode}", props["magisk.versionCode"])
-    NOTES["text"] = NOTES["text"] + "\nYou may join the telegram chat at: [https://t.me/Fox2Code_Chat](https://t.me/Fox2Code_Chat)\n\n"
+    NOTES["text"] = NOTES["text"] + "\nYou may join the telegram chat at: [https://t.me/Fox2Code_Chat](https://t.me/Fox2Code_Chat)"
     f = open(OUTPUT_DIR_NOTES, "w")
     f.write(NOTES["text"])
+    f.write("\n")
     f.close()
     pass
 

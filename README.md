@@ -8,7 +8,8 @@ It also use additional custom patches to improve Magsik in general.
 
 ### Features
 
-- Include experimental Magisk patches, fixing bugs months before canary does.
+- Include experimental Magisk patches, fixing bugs before canary does.
+- Include experimental Magisk patches, adding bugs before canary does.
 - Improved themes! (Fixed broken `Amoled` and `Fraxure` themes)
 - Improved DenyList, with cleaner environement for protected apps.
 
