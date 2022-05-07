@@ -1,0 +1,26 @@
+From 53c880456494e296b00ac2dbade2334549865e66 Mon Sep 17 00:00:00 2001
+From: canyie <a1364259@163.com>
+Date: Mon, 4 Apr 2022 16:21:22 +0800
+Subject: [PATCH] Allow denylist to handle isolated processes before Android 11
+
+---
+ native/jni/zygisk/hook.cpp | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/native/jni/zygisk/hook.cpp b/native/jni/zygisk/hook.cpp
+index c1c459db7e1..4b01a1f0740 100644
+--- a/native/jni/zygisk/hook.cpp
++++ b/native/jni/zygisk/hook.cpp
+@@ -472,6 +472,11 @@ void HookContext::nativeSpecializeAppProcess_pre() {
+     if ((flags & UNMOUNT_MASK) == UNMOUNT_MASK) {
+         ZLOGI("[%s] is on the denylist\n", process);
+         state[DO_UNMOUNT] = true;
++
++        // Ensure separated namespace, allow denylist to handle isolated process before Android 11
++        if (args->mount_external == 0 /* MOUNT_EXTERNAL_NONE */) {
++            args->mount_external = 1 /* MOUNT_EXTERNAL_DEFAULT */;
++        }
+     } else if (fd >= 0) {
+         run_modules_pre(module_fds);
+     }
+

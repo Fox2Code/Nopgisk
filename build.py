@@ -22,9 +22,9 @@ OUTPUT_DIR_NOTES = os.path.join(OUTPUT_DIR, "notes.md")
 MAGISK_GIT_URL = "https://github.com/topjohnwu/Magisk.git"
 MAGISK_API_PULLS_URL = "https://api.github.com/repos/topjohnwu/Magisk/pulls"
 # User from where the PR are used by default for staging patches
-MAGISK_PR_PROVIDERS = ["LSPosed"]
+MAGISK_PR_PROVIDERS = ["LSPosed", "canyie"]
 # Whitelisted PR are allowed to be loaded even if it's not a patch from a provider or a draft
-MAGISK_WHITELISTED_PR = [5030]
+MAGISK_WHITELISTED_PR = [5804, 5803, 5802]
 # Blacklisted PR are denied to be loaded even if it's a patch from a provider
 MAGISK_BLACKLISTED_PR = []
 
@@ -158,7 +158,7 @@ def build_magisk():
     f.write("  },\n")
     f.write("  \"stub\": {\n")
     f.write("    \"versionCode\": \"" + props["magisk.stubVersion"] + "\",\n")
-    f.write("    \"link\": \"https://raw.githubusercontent.com/topjohnwu/magisk-files/files/stub-release.apk\"\n")
+    f.write("    \"link\": \"https://raw.githubusercontent.com/Fox2Code/nopgisk-files/main/stub-release.apk\"\n")
     f.write("  }\n")
     f.write("}\n")
     f.close()
