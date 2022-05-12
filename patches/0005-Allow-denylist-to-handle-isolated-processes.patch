@@ -11,14 +11,18 @@ diff --git a/native/jni/zygisk/hook.cpp b/native/jni/zygisk/hook.cpp
 index c1c459db7e1..4b01a1f0740 100644
 --- a/native/jni/zygisk/hook.cpp
 +++ b/native/jni/zygisk/hook.cpp
-@@ -472,6 +472,11 @@ void HookContext::nativeSpecializeAppProcess_pre() {
+@@ -472,6 +472,15 @@ void HookContext::nativeSpecializeAppProcess_pre() {
      if ((flags & UNMOUNT_MASK) == UNMOUNT_MASK) {
          ZLOGI("[%s] is on the denylist\n", process);
          state[DO_UNMOUNT] = true;
 +
 +        // Ensure separated namespace, allow denylist to handle isolated process before Android 11
 +        if (args->mount_external == 0 /* MOUNT_EXTERNAL_NONE */) {
-+            args->mount_external = 1 /* MOUNT_EXTERNAL_DEFAULT */;
++            // Only apply the fix before Android 11, as it can cause undefined behaviour in later versions
++            char sdk_ver_str[92]; // PROPERTY_VALUE_MAX
++            if (__system_property_get("ro.build.version.sdk", sdk_ver_str) && atoi(sdk_ver_str) < 30) {
++                args->mount_external = 1 /* MOUNT_EXTERNAL_DEFAULT */;
++            }
 +        }
      } else if (fd >= 0) {
          run_modules_pre(module_fds);
